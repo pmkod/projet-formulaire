@@ -1,0 +1,37 @@
+<%- include('../../partials/head') %> <%- include('../../partials/header') %>
+
+<div class="container mt-2">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Date creation</th>
+        <th scope="col">Enseignant</th>
+        <th scope="col">Classe</th>
+        <th scope="col">Cours</th>
+        <th scope="col">Date cours</th>
+        <th scope="col">Debut cours</th>
+        <th scope="col">Fin cours</th>
+        <th scope="col">Volume cours</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% courses.forEach((course)=> { %>
+
+      <tr>
+        <td scope="row"><%= course.dateDeCreation %></td>
+        <td><%= course.enseignant.nom + " " + course.enseignant.prenom %></td>
+
+        <td><%= course.classe.libelle %></td>
+        <td><%= course.ue.libelle %></td>
+
+        <td><%= course.dateCours %></td>
+        <td><%= course.dateDebutCours %></td>
+        <td><%= course.dateFinCours %></td>
+        <td><%= course.volumeCours %>h</td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../../partials/foot') %>

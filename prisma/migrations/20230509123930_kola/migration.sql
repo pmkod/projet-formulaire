@@ -1,0 +1,96 @@
+-- CreateTable
+CREATE TABLE `Specialite` (
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `libelle` VARCHAR(191) NOT NULL,
+    `dateDeCreation` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Niveau` (
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `libelle` VARCHAR(191) NOT NULL,
+    `dateDeCreation` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Sexe` (
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `libelle` VARCHAR(191) NOT NULL,
+    `dateDeCreation` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Enseignant` (
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `nom` VARCHAR(191) NOT NULL,
+    `prenom` VARCHAR(191) NOT NULL,
+    `tel` VARCHAR(191) NOT NULL,
+    `compteBanquaire` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `dateDeCreation` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `idSpecialite` INTEGER UNSIGNED NOT NULL,
+    `idNiveau` INTEGER UNSIGNED NOT NULL,
+    `idSexe` INTEGER UNSIGNED NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Enseigne` (
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `dateCours` DATETIME(3) NOT NULL,
+    `dateDebutCours` DATETIME(3) NOT NULL,
+    `dateFinCours` DATETIME(3) NOT NULL,
+    `volumeCours` INTEGER NOT NULL,
+    `contenuCours` VARCHAR(191) NOT NULL,
+    `dateDeCreation` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `idEnseignant` INTEGER UNSIGNED NOT NULL,
+    `idUe` INTEGER UNSIGNED NOT NULL,
+    `idClasse` INTEGER UNSIGNED NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Classe` (
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `libelle` VARCHAR(191) NOT NULL,
+    `dateDeCreation` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Ue` (
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `libelle` VARCHAR(191) NOT NULL,
+    `volume` INTEGER NOT NULL,
+    `credit` INTEGER NOT NULL,
+    `dateDeCreation` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `Enseignant` ADD CONSTRAINT `Enseignant_idSpecialite_fkey` FOREIGN KEY (`idSpecialite`) REFERENCES `Specialite`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Enseignant` ADD CONSTRAINT `Enseignant_idNiveau_fkey` FOREIGN KEY (`idNiveau`) REFERENCES `Niveau`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Enseignant` ADD CONSTRAINT `Enseignant_idSexe_fkey` FOREIGN KEY (`idSexe`) REFERENCES `Sexe`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Enseigne` ADD CONSTRAINT `Enseigne_idEnseignant_fkey` FOREIGN KEY (`idEnseignant`) REFERENCES `Enseignant`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Enseigne` ADD CONSTRAINT `Enseigne_idUe_fkey` FOREIGN KEY (`idUe`) REFERENCES `Ue`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Enseigne` ADD CONSTRAINT `Enseigne_idClasse_fkey` FOREIGN KEY (`idClasse`) REFERENCES `Classe`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

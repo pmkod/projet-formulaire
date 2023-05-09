@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Specialite {
+  id             Int          @id @default(autoincrement()) @db.UnsignedInt
+  libelle        String
+  dateDeCreation DateTime     @default(now())
+  enseignants    Enseignant[]
+}
+
+model Niveau {
+  id             Int          @id @default(autoincrement()) @db.UnsignedInt
+  libelle        String
+  dateDeCreation DateTime     @default(now())
+  enseignants    Enseignant[]
+}
+
+model Sexe {
+  id             Int          @id @default(autoincrement()) @db.UnsignedInt
+  libelle        String
+  dateDeCreation DateTime     @default(now())
+  enseignants    Enseignant[]
+}
+
+model Enseignant {
+  id              Int        @id @default(autoincrement()) @db.UnsignedInt
+  nom             String
+  prenom          String
+  tel             String
+  compteBanquaire String
+  email           String
+  dateDeCreation  DateTime   @default(now())
+  idSpecialite    Int        @db.UnsignedInt
+  specialite      Specialite @relation(fields: [idSpecialite], references: [id])
+  idNiveau        Int        @db.UnsignedInt
+  niveau          Niveau     @relation(fields: [idNiveau], references: [id])
+  idSexe          Int        @db.UnsignedInt
+  sexe            Sexe       @relation(fields: [idSexe], references: [id])
+  enseigne        Enseigne[]
+}
+
+model Enseigne {
+  id             Int        @id @default(autoincrement()) @db.UnsignedInt
+  dateCours      DateTime
+  dateDebutCours DateTime
+  dateFinCours   DateTime
+  volumeCours    Int
+  contenuCours   String
+  dateDeCreation DateTime   @default(now())
+  idEnseignant   Int        @db.UnsignedInt
+  enseignant     Enseignant @relation(fields: [idEnseignant], references: [id])
+  idUe           Int        @db.UnsignedInt
+  ue             Ue         @relation(fields: [idUe], references: [id])
+  idClasse       Int        @db.UnsignedInt
+  classe         Classe     @relation(fields: [idClasse], references: [id])
+}
+
+model Classe {
+  id             Int        @id @default(autoincrement()) @db.UnsignedInt
+  libelle        String
+  dateDeCreation DateTime   @default(now())
+  enseigne       Enseigne[]
+}
+
+model Ue {
+  id             Int        @id @default(autoincrement()) @db.UnsignedInt
+  libelle        String
+  volume         Int
+  credit         Int
+  dateDeCreation DateTime   @default(now())
+  enseigne       Enseigne[]
+}

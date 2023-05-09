@@ -1,0 +1,94 @@
+<%- include('../../partials/head') %> <%- include('../../partials/header') %>
+
+<div>
+  <div class="row mt-2">
+    <div class="col"></div>
+    <form method="post" action="/courses/store" class="col">
+      <h3 class="mb-2">Connexion</h3>
+      <div class="mb-3">
+        <label for="classe" class="form-label">Enseignant</label>
+        <select
+          class="form-select"
+          name="enseignant"
+          aria-label="Default select example"
+        >
+          <% teachers.forEach((teacher)=> { %>
+          <option value="<%= teacher.id %>">
+            <%= teacher.nom %> &nbsp; <%= teacher.prenom %>
+          </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="classe" class="form-label">Classe</label>
+        <select
+          class="form-select"
+          name="classe"
+          aria-label="Default select example"
+        >
+          <% classes.forEach((classe)=> { %>
+          <option value="<%= classe.id %>"><%= classe.libelle %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="cours" class="form-label">Cours</label>
+        <select
+          class="form-select"
+          name="cours"
+          aria-label="Default select example"
+        >
+          <% ues.forEach((ue)=> { %>
+          <option value="<%= ue.id %>"><%= ue.libelle %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="dateCours" class="form-label">Date cours</label>
+        <input
+          type="date"
+          class="form-control"
+          id="dateCours"
+          name="dateCours"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="debutCours" class="form-label">Debut cours</label>
+        <input
+          type="time"
+          class="form-control"
+          id="debutCours"
+          name="debutCours"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="finCours" class="form-label">Fin cours</label>
+        <input type="time" class="form-control" id="finCours" name="finCours" />
+      </div>
+      <div class="mb-3">
+        <label for="volumeCours" class="form-label">Volume cours</label>
+        <input
+          type="time"
+          class="form-control"
+          id="volumeCours"
+          name="volumeCours"
+          placeholder="Le nombre d'heure"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="contenu" class="form-label">Contenu cours</label>
+        <textarea
+          class="form-control"
+          placeholder="Leave a comment here"
+          id="contenu"
+          name="contenu"
+          style="height: 200px"
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Se connecter</button>
+    </form>
+    <div class="col"></div>
+  </div>
+</div>
+
+<%- include('../../partials/foot') %>
